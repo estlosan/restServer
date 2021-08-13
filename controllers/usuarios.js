@@ -21,18 +21,6 @@ const usuariosPost = async (req, res = response) => {
 
     let { name, email, password, role } = req.body;
 
-    //Validate 
-    
-
-    // Check if email exists
-    const existEmail = await User.findOne({ email })
-
-    if (existEmail) {
-        return res.status(400).json({
-            msg: 'Duplicated email'
-        })
-    }
-
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
 

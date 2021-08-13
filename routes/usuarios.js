@@ -10,7 +10,7 @@ const { usuariosGet,
         usuariosPatch } = require('../controllers/usuarios');
 
 const Role = require('../models/Role');
-const { isRoleValid } = require('../helpers/db-validators');
+const { isRoleValid, existsEmail } = require('../helpers/db-validators');
 
 const router = Router();
 
@@ -23,6 +23,7 @@ router.post('/', [
     check('name', 'Name required').not().isEmpty(),
     check('password', 'Password length must be 6 or more').isLength({ min: 6 }),
     check('email', 'Email not valid').isEmail(),
+    check('email').custom(existsEmail),
     check('role').custom(isRoleValid),
     validate
 ], usuariosPost );
